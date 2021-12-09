@@ -23,7 +23,7 @@
             android:src="@drawable/gradient_card"/>
 
         <TextView
-            android:id="@+id/txt_tiel"
+            android:id="@+id/txt_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
