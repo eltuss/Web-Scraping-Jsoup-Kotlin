@@ -1,12 +1,12 @@
 package com.example.webscrapingjsoup
 
+import android.content.Intent
 import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import org.jsoup.Jsoup
 import org.jsoup.select.Elements
-import org.w3c.dom.Document
 import java.io.IOException
 
 class Splash : AppCompatActivity() {
@@ -16,12 +16,13 @@ class Splash : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        loader = LoadInitNews()
+        loader = LoadInitNews(this)
         loader!!.execute()
 
     }
 
-    internal class LoadInitNews : AsyncTask<Void, Void, ArrayList<New>>(){
+    //Precisa desse var como parametro para abrir a outra tela lá em baixo
+    internal class LoadInitNews(var activity: AppCompatActivity?): AsyncTask<Void, Void, ArrayList<New>>(){
 
         private var news: ArrayList<New> = ArrayList()
 
@@ -54,6 +55,12 @@ class Splash : AppCompatActivity() {
             return  news
         }
 
+        override fun onPostExecute(result: ArrayList<New>?) {
+            val intent = Intent(activity, MainActivity::class.java)
+            activity!!.startActivity(intent)
+            activity!!.finish()
+
+        }
     }
 
 }
