@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimaryDark">#212E53</color>
     <color name="colorPrimary">#212E53</color>
-    <color name="colorPrimaryVariant">#FFFFFFFF</color>
+    <color name="colorPrimaryVariant">#212E53</color>
     <color name="colorSecondary">#FF03DAC5</color>
     <color name="colorSecondaryVariant">#FF018786</color>
     <color name="black">#FF000000</color>
