@@ -9,24 +9,26 @@ import org.jsoup.Jsoup
 import org.jsoup.select.Elements
 import java.io.IOException
 
-class Splash : AppCompatActivity() {
+class Splash : AppCompatActivity(), IJsoupData {
 
     private var loader: AsyncTask<Void, Void, ArrayList<New>>? = null
+    private val WEB_PAGE: String = "limitstart=0"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        loader = LoadInitNews(this)
+        loader = LoadNews(this, WEB_PAGE)
         loader!!.execute()
 
     }
 
+    override fun getWebData(datas: ArrayList<New>) {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("NEWS", datas)
+        startActivity(intent)
+        finish()
 
-            val intent = Intent(activity, MainActivity::class.java)
-            activity!!.startActivity(intent)
-            activity!!.finish()
-
-        }
     }
+}
 
 }

@@ -7,7 +7,7 @@ import org.jsoup.Jsoup
 import org.jsoup.select.Elements
 import java.io.IOException
 
-class LoadInitNews(var activity: AppCompatActivity?, var page: String) :
+class LoadNews(var activity: AppCompatActivity?, var page: String) :
     AsyncTask<Void, Void, ArrayList<New>>() {
 
     private var news: ArrayList<New> = ArrayList()
