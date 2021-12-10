@@ -30,5 +30,3 @@ class Splash : AppCompatActivity(), IJsoupData {
 
     }
 }
-
-}
