@@ -24,7 +24,7 @@ class Splash : AppCompatActivity(), IJsoupData {
     }
 
     override fun getWebData(datas: ArrayList<New>) {
-        if (datas.isEmpty()){
+        if (datas.isEmpty()){ // se os dados recebidos estiverem vazios, ele cai na tela de erro
             val intent = Intent(this, Error::class.java)
             startActivity(intent)
             finish()
