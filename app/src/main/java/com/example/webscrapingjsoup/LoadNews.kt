@@ -32,7 +32,7 @@ class LoadNews(var activity: AppCompatActivity?, var page: String) :
                 //Pega os detalhes da noticia dentro da tag "a" com o atributo "href"
                 val details: String = tagHeading.select("a").attr("href")
 
-                Log.i("Result", "$imgUrl $title $details")
+                //Log.i("Result", "$imgUrl $title $details")
                 news.add(New("https://antigo.saude.gov.br$imgUrl", title, details))
             }
 
@@ -43,7 +43,8 @@ class LoadNews(var activity: AppCompatActivity?, var page: String) :
     }
 
     override fun onPostExecute(result: ArrayList<New>?) {
-        loadedData.getWebData(result!!)
+            loadedData.getWebData(result!!)
+
     }
 
 }

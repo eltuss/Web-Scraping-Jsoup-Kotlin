@@ -5,6 +5,7 @@ import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import kotlinx.android.synthetic.main.activity_main.*
 import org.jsoup.Jsoup
 import org.jsoup.select.Elements
 import java.io.IOException
@@ -23,10 +24,18 @@ class Splash : AppCompatActivity(), IJsoupData {
     }
 
     override fun getWebData(datas: ArrayList<New>) {
-        val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("NEWS", datas)
-        startActivity(intent)
-        finish()
+        if (datas.isEmpty()){
+            val intent = Intent(this, Error::class.java)
+            startActivity(intent)
+            finish()
+        }else{
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("NEWS", datas)
+            //Log.i("Result", "recyclerView Splash  $datas")
+            startActivity(intent)
+            finish()
+        }
 
     }
+
 }
