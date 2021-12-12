@@ -1,19 +1,18 @@
 package com.example.webscrapingjsoup
 
 import android.os.AsyncTask
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import org.jsoup.Jsoup
 import org.jsoup.select.Elements
 import java.io.IOException
 
 class LoadNews(var activity: AppCompatActivity?, var page: String) :
-    AsyncTask<Void, Void, ArrayList<New>>() {
+    AsyncTask<Void, Void, ArrayList<News>>() {
 
-    private var news: ArrayList<New> = ArrayList()
+    private var news: ArrayList<News> = ArrayList()
     private var loadedData = activity as IJsoupData
 
-    override fun doInBackground(vararg p0: Void?): ArrayList<New> {
+    override fun doInBackground(vararg p0: Void?): ArrayList<News> {
         try {
             val url = "https://jovemnerd.com.br/nerdbunker/"
 
@@ -35,7 +34,7 @@ class LoadNews(var activity: AppCompatActivity?, var page: String) :
                 val details: String = tagHeading.select("a").attr("href")
 
                 //Log.i("Result", "$imgUrl $title $details")
-                news.add(New(imgUrl, title, details))
+                news.add(News(imgUrl, title, details))
             }
 
         } catch (e: IOException) {
@@ -44,7 +43,7 @@ class LoadNews(var activity: AppCompatActivity?, var page: String) :
         return news
     }
 
-    override fun onPostExecute(result: ArrayList<New>?) {
+    override fun onPostExecute(result: ArrayList<News>?) {
             loadedData.getWebData(result!!)
 
     }

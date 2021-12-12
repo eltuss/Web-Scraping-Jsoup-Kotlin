@@ -12,7 +12,7 @@ class NewsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     val img_new: ImageView = itemView.image_card
     val txt_title: TextView = itemView.txt_title
 
-    fun bindView(new: New){
+    fun bindView(new: News){
         txt_title.text = new.title
         Picasso.get().load(new.image).into(img_new)
     }

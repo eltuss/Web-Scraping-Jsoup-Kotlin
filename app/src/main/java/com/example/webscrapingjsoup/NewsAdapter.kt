@@ -1,14 +1,13 @@
 package com.example.webscrapingjsoup
 
 import android.app.Activity
-import android.graphics.drawable.Icon
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class NewAdapter(recyclerview: RecyclerView, var activity: Activity, var news: MutableList<New?>):
+class NewsAdapter(recyclerview: RecyclerView, var activity: Activity, var news: MutableList<News?>):
             RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
     val VIEW_TYPE_ITEM = 0
