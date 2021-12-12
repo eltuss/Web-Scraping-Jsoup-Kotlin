@@ -1,6 +1,7 @@
 package com.example.webscrapingjsoup
 
 import android.app.Activity
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -72,6 +73,19 @@ class NewsAdapter(recyclerview: RecyclerView, var activity: Activity, var news: 
         }else if (holder is LoaderViewHolder){
             holder.bindView()
         }
+
+        //Aqui eu pego a posição do meu item
+        val newsItem = news[position]
+        //Coloco uma ação de clicar no meu itemView
+        holder.itemView.setOnClickListener {
+            val intent = Intent(activity, DetailsNewsActivity::class.java)
+            //Passo os conteudos do item
+            intent.putExtra("IMAGE",newsItem!!.image)
+            intent.putExtra("TITLE",newsItem.title)
+            intent.putExtra("DETAILS",newsItem.details)
+            activity.startActivity(intent)
+        }
+
     }
 
     fun setLoaded(){
