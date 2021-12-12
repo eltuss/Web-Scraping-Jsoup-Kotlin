@@ -15,13 +15,15 @@ class LoadNews(var activity: AppCompatActivity?, var page: String) :
 
     override fun doInBackground(vararg p0: Void?): ArrayList<New> {
         try {
-            val url = "https://antigo.saude.gov.br/fakenews/"
+            val url = "https://jovemnerd.com.br/nerdbunker/"
 
             val doc: org.jsoup.nodes.Document = Jsoup.connect(url).get()
             //Pega a imagem dentro da div
-            val div: Elements = doc.select("div.tileItem")
+            val div: Elements = doc.select("a.image")
             //Pega o titulo dentro do H2
-            val tagHeading: Elements = doc.select("h2.tileHeadline")
+            val tagHeading: Elements = doc.select("h2.title")
+
+            //Log.i("Result TOP", "$div $tagHeading ")
 
             val size: Int = div.size
             for (index in 0..size) {
@@ -33,7 +35,7 @@ class LoadNews(var activity: AppCompatActivity?, var page: String) :
                 val details: String = tagHeading.select("a").attr("href")
 
                 //Log.i("Result", "$imgUrl $title $details")
-                news.add(New("https://antigo.saude.gov.br$imgUrl", title, details))
+                news.add(New(imgUrl, title, details))
             }
 
         } catch (e: IOException) {

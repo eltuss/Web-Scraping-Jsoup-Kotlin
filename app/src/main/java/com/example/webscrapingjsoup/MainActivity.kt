@@ -40,15 +40,15 @@ class MainActivity : AppCompatActivity(),ILoadMore, IJsoupData {
        // Log.i("Result", "recyclerView Main  $recyclerView")
     }
 
-    private fun getTenNews(listNews: java.util.ArrayList<New>) {
-        for (index in 0..9){
+    private fun getTenNews(listNews: java.util.ArrayList<New>) { //Aqui ele carrega a quantidade de itens
+        for (index in 0..27){
             newsLoad.add(listNews[index])
         }
     }
 
-    // Quando carregar os 10 itens do getTenNews, ele carrega mais 10 até completar 50 itens
+    // Quando carregar os 27 itens do getTenNews, ele carregaria mais 10 do onLoadMore até completar a quantidade que esta setado aqui abaixo
     override fun getWebData(datas: ArrayList<New>) {
-        if (newsLoad.size < 50){
+        if (newsLoad.size < 27){
             newsLoad.add(null)
             newAdapter.notifyItemInserted(newsLoad.size -1)
 
