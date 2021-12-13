@@ -11,6 +11,7 @@ class LoadDetailsNews(activity: AppCompatActivity, var urlDetails: String):
     AsyncTask<Void, Void, ArrayList<String>>() {
 
     private var details: ArrayList<String>? = ArrayList()
+    private var loader = activity as ILoadDetails
 
     override fun doInBackground(vararg p0: Void?): ArrayList<String> {
         try {
@@ -32,5 +33,9 @@ class LoadDetailsNews(activity: AppCompatActivity, var urlDetails: String):
             e.printStackTrace()
         }
         return details!!
+    }
+
+    override fun onPostExecute(result: ArrayList<String>?) {
+        loader.getDetails(result!!)
     }
 }
