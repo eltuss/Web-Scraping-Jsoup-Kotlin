@@ -3,10 +3,11 @@ package com.example.webscrapingjsoup
 import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_details_news.*
 
-class DetailsNewsActivity : AppCompatActivity() {
+class DetailsNewsActivity : AppCompatActivity(), ILoadDetails {
 
     private var urlImage: String? = null
     private var urlDetails: String? = null
@@ -24,5 +25,17 @@ class DetailsNewsActivity : AppCompatActivity() {
         loadDetailsNews = LoadDetailsNews(this, urlDetails!!)
         loadDetailsNews!!.execute()
 
+    }
+
+    //Aqui ele pega os itens separados somente do texto e exibe
+    override fun getDetails(details: ArrayList<String>) {
+        for (index in 0..details.size-1){
+            if (index == details.size-1){
+                txt_detail.append("\n" + details[index] + "\n")
+
+            }else{
+                txt_detail.append(details[index] + "\n\n")
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.example.webscrapingjsoup
 
 import android.os.AsyncTask
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import org.jsoup.Jsoup
 import org.jsoup.select.Elements
@@ -31,9 +32,9 @@ class LoadNews(var activity: AppCompatActivity?, var page: String) :
                 //Pega o texto dentro da tag "a"
                 val title: String = tagHeading.select("a").eq(index).text()
                 //Pega os detalhes da noticia dentro da tag "a" com o atributo "href"
-                val details: String = tagHeading.select("a").attr("href")
+                val details: String = tagHeading.select("a").eq(index).attr("href")
 
-                //Log.i("Result", "$imgUrl $title $details")
+                //Log.i("Result", details)
                 news.add(News(imgUrl, title, details))
             }
 

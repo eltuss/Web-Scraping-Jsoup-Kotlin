@@ -1,6 +1,7 @@
 package com.example.webscrapingjsoup
 
 import android.os.AsyncTask
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -15,18 +16,19 @@ class LoadDetailsNews(activity: AppCompatActivity, var urlDetails: String):
 
     override fun doInBackground(vararg p0: Void?): ArrayList<String> {
         try {
-            val baseUrl = "https://jovemnerd.com.br/nerdbunker/"
-            val url = baseUrl+urlDetails
+
+            val url = urlDetails
 
             val doc: Document = Jsoup.connect(url).get()
             val div: Elements = doc.select("div.content-left")
             div.select("div").remove()
             //Aqui ele pega apenas o texto dentro das tags "p" e "li"
-            val textComplete = div.select("p, ul > li")
+            val textComplete = div.select("p, h2, ul > li")
 
             for (element in textComplete){
                 if (element.text() != "")
                     details!!.add(element.text())
+
             }
 
         }catch (e: IOException){
