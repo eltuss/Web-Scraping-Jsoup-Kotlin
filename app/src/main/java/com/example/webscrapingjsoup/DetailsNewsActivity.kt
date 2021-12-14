@@ -4,6 +4,8 @@ import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_details_news.*
 
@@ -25,6 +27,22 @@ class DetailsNewsActivity : AppCompatActivity(), ILoadDetails {
         loadDetailsNews = LoadDetailsNews(this, urlDetails!!)
         loadDetailsNews!!.execute()
 
+    }
+
+    //função de onCreateOptionsMenu para usar nas opções de menu de share
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_activity_details_news, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id: Int = item.itemId
+
+        when(id){
+
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     //Aqui ele pega os itens separados somente do texto e exibe
