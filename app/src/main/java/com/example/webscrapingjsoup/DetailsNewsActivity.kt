@@ -27,9 +27,12 @@ class DetailsNewsActivity : AppCompatActivity(), ILoadDetails {
         loadDetailsNews = LoadDetailsNews(this, urlDetails!!)
         loadDetailsNews!!.execute()
 
+        //Aqui ele habilita a opção de voltar
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
     }
 
-    //função de onCreateOptionsMenu para usar nas opções de menu de share
+    //função que manipula o menu na barra superior da tela
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_activity_details_news, menu)
         return true
@@ -39,7 +42,7 @@ class DetailsNewsActivity : AppCompatActivity(), ILoadDetails {
         val id: Int = item.itemId
 
         when(id){
-
+            android.R.id.home -> finish() //Aqui ele volta para a tela de home(principal) MainActivity
         }
 
         return super.onOptionsItemSelected(item)
