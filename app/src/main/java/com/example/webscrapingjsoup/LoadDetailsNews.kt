@@ -8,12 +8,13 @@ import org.jsoup.nodes.Document
 import org.jsoup.select.Elements
 import java.io.IOException
 
-class LoadDetailsNews(activity: AppCompatActivity, var urlDetails: String):
+class LoadDetailsNews(activity: AppCompatActivity, var urlDetails: String) :
     AsyncTask<Void, Void, ArrayList<String>>() {
 
     private var details: ArrayList<String>? = ArrayList()
     private var loader = activity as ILoadDetails
 
+    //Aqui formata o conteudo do texto que é mostrado na tela
     override fun doInBackground(vararg p0: Void?): ArrayList<String> {
         try {
 
@@ -25,13 +26,12 @@ class LoadDetailsNews(activity: AppCompatActivity, var urlDetails: String):
             //Aqui ele pega apenas o texto dentro das tags "p" e "li"
             val textComplete = div.select("p, h2, ul > li")
 
-            for (element in textComplete){
+            for (element in textComplete) {
                 if (element.text() != "")
                     details!!.add(element.text())
-
             }
 
-        }catch (e: IOException){
+        } catch (e: IOException) {
             e.printStackTrace()
         }
         return details!!

@@ -45,6 +45,7 @@ class DetailsNewsActivity : AppCompatActivity(), ILoadDetails {
 
     //Função para compartilhar o item
     fun shareNewsImage(){
+
         Picasso.get().load(urlImage).into(object : Target{
 
             override fun onPrepareLoad(placeHolderDrawable: Drawable?) {  }
@@ -52,10 +53,17 @@ class DetailsNewsActivity : AppCompatActivity(), ILoadDetails {
             override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) { }
 
             override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
+                //Intenção criada com a ação de envio
                 val intent = Intent(Intent.ACTION_SEND)
-                intent.setType("image/*")
+                //Aqui escolho o formato do arquivo, que no caso é o link para a imagem dentro de detalhes
+                intent.setType("image/* + $urlDetails")
+                // getLocalBitmapUri é a função abaixo
                 intent.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(bitmap!!))
+                //Aqui ele começa o share
                 startActivity(Intent.createChooser(intent, "Share"))
+
+                //verificar o que esta sendo compartilhado
+                Log.i("Compartilhamento: ","Result :  $intent" )
             }
 
             private fun getLocalBitmapUri(bitmap: Bitmap): Uri? {
@@ -63,13 +71,17 @@ class DetailsNewsActivity : AppCompatActivity(), ILoadDetails {
                 var bitmapUri: Uri? = null
                 try {
 
+                    //Pega um diretorio externo do app para salvar a imagem
                     val file = File(getExternalFilesDir(Environment.DIRECTORY_PICTURES),
                     "shareimage" + ".png")
 
+                    //Pega o arquivo que esta salvo no endereço acima
                     val out = FileOutputStream(file)
+                    //Comprime o arquivo no formato PNG para não ficar muito grande na saida
                     bitmap.compress(Bitmap.CompressFormat.PNG, 90, out)
                     out.close()
 
+                    //bitmapUri pega o contexto dessa aplicação, o nome da pasta e atribui o caminho fileprovider
                     bitmapUri = getUriForFile(applicationContext,
                         applicationContext.packageName + ".fileprovider",
                     file)
@@ -113,3 +125,5 @@ class DetailsNewsActivity : AppCompatActivity(), ILoadDetails {
         }
     }
 }
+
+
