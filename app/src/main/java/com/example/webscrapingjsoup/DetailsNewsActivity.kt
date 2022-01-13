@@ -44,8 +44,9 @@ class DetailsNewsActivity : AppCompatActivity(), ILoadDetails {
     }
 
     //Função para compartilhar o item
-    fun shareNewsImage(){
+    fun shareNewsImage() {
 
+        //Aqui o compartilhar funciona para a imagem
         Picasso.get().load(urlImage).into(object : Target{
 
             override fun onPrepareLoad(placeHolderDrawable: Drawable?) {  }
@@ -63,7 +64,7 @@ class DetailsNewsActivity : AppCompatActivity(), ILoadDetails {
                 startActivity(Intent.createChooser(intent, "Share"))
 
                 //verificar o que esta sendo compartilhado
-                Log.i("Compartilhamento: ","Result :  $intent" )
+                Log.i("Compartilhamento: ","Result1 :  $intent" )
             }
 
             private fun getLocalBitmapUri(bitmap: Bitmap): Uri? {
@@ -95,6 +96,40 @@ class DetailsNewsActivity : AppCompatActivity(), ILoadDetails {
         })
     }
 
+    //função basica de compartilhamento - tentando compartilhar apenas o link
+    fun sharedLink(){
+
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.setType("text/* + $urlDetails")
+        intent.putExtra(Intent.EXTRA_STREAM, getLocalLinkUri(urlDetails!!))
+        startActivity(Intent.createChooser(intent, "compartilhado com sucesso"))
+
+        Log.i("Compartilhamento: ","Result2 :  $intent" )
+
+    }
+
+    private fun getLocalLinkUri(urlDetails: String): Uri? {
+
+        var linkUri: Uri? = null
+
+        try {
+
+            //Pega um diretorio externo do app para salvar a imagem
+            val file = File(getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS),
+                "shareLink" + ".txt")
+
+            //bitmapUri pega o contexto dessa aplicação, o nome da pasta e atribui o caminho fileprovider
+            linkUri = getUriForFile(applicationContext,
+                applicationContext.packageName + ".fileprovider",
+                file)
+
+        }catch(e : IOException){
+            e.printStackTrace()
+        }
+        return linkUri
+
+    }
+
     //função que manipula o menu na barra superior da tela
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_activity_details_news, menu)
@@ -106,7 +141,7 @@ class DetailsNewsActivity : AppCompatActivity(), ILoadDetails {
 
         when(id){
             android.R.id.home -> finish() //Aqui ele volta para a tela de home(principal) MainActivity
-            R.id.btn_share -> shareNewsImage()
+            R.id.btn_share -> sharedLink()
 
         }
 
@@ -125,5 +160,6 @@ class DetailsNewsActivity : AppCompatActivity(), ILoadDetails {
         }
     }
 }
+
 
 
