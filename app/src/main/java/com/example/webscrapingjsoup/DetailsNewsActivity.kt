@@ -5,12 +5,13 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.AsyncTask
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider.getUriForFile
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
@@ -18,7 +19,6 @@ import kotlinx.android.synthetic.main.activity_details_news.*
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.lang.Exception
 
 class DetailsNewsActivity : AppCompatActivity(), ILoadDetails {
 
@@ -96,37 +96,19 @@ class DetailsNewsActivity : AppCompatActivity(), ILoadDetails {
         })
     }
 
-    //função basica de compartilhamento - tentando compartilhar apenas o link
+    //função basica de compartilhamento - Compartilhar apenas o link
     fun sharedLink(){
 
-        val intent = Intent(Intent.ACTION_SEND)
-        intent.setType("text/* + $urlDetails")
-        intent.putExtra(Intent.EXTRA_STREAM, getLocalLinkUri(urlDetails!!))
-        startActivity(Intent.createChooser(intent, "compartilhado com sucesso"))
+        //Link fixo para teste
+        val shareBody = "https://jovemnerd.com.br/nerdbunker/the-boys-informacoes-condessa-carmesin-feiticeira-escarlate/"
 
-        Log.i("Compartilhamento: ","Result2 :  $intent" )
-
-    }
-
-    private fun getLocalLinkUri(urlDetails: String): Uri? {
-
-        var linkUri: Uri? = null
-
-        try {
-
-            //Pega um diretorio externo do app para salvar a imagem
-            val file = File(getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS),
-                "shareLink" + ".txt")
-
-            //bitmapUri pega o contexto dessa aplicação, o nome da pasta e atribui o caminho fileprovider
-            linkUri = getUriForFile(applicationContext,
-                applicationContext.packageName + ".fileprovider",
-                file)
-
-        }catch(e : IOException){
-            e.printStackTrace()
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, shareBody)
+            type = "text/plain"
         }
-        return linkUri
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
 
     }
 
