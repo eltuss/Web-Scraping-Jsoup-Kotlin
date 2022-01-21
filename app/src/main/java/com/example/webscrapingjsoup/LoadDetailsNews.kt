@@ -22,11 +22,20 @@ class LoadDetailsNews(activity: AppCompatActivity, var urlDetails: String) :
 
             val doc: Document = Jsoup.connect(url).get()
             val div: Elements = doc.select("div.content-left")
-            div.select("div").remove()
+            div.select("div").remove() //Aqui remove os itens que não quero que aparece na tela
+            div.select("footer").remove()
             //Aqui ele pega apenas o texto dentro das tags "p" e "li"
-            val textComplete = div.select("p, h2, ul > li")
+            val textComplete = div.select("h2, p") // h2 é o titulo da materia, p é o conteudo dos paragrafos
 
-            for (element in textComplete) {
+            val subtitle: Elements = doc.select("p.excerpt")//Aqui pega o subtitulo da materia
+
+            val author: Elements = doc.select("div.author")//Aqui pega o autor da materia
+
+            val article: Elements = doc.select("p")
+
+            Log.i("Result TOP", "TEXTO:  $article ")
+
+            for (element in subtitle + textComplete + author) {
                 if (element.text() != "")
                     details!!.add(element.text())
             }

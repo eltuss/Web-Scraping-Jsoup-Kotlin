@@ -1,12 +1,15 @@
 package com.example.webscrapingjsoup
 
 import android.os.AsyncTask
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import org.jsoup.Jsoup
 import org.jsoup.select.Elements
 import java.io.IOException
 
+@RequiresApi(Build.VERSION_CODES.CUPCAKE)
 class LoadNews(var activity: AppCompatActivity?, var page: String) :
     AsyncTask<Void, Void, ArrayList<News>>() {
 
@@ -23,8 +26,6 @@ class LoadNews(var activity: AppCompatActivity?, var page: String) :
             //Pega o titulo dentro do H2
             val tagHeading: Elements = doc.select("h2.title")
 
-            //Log.i("Result TOP", "$div $tagHeading ")
-
             val size: Int = div.size
             for (index in 0..size) {
                 //Pega o link da imagem dentro da tag "img" com o atributo src
@@ -33,6 +34,8 @@ class LoadNews(var activity: AppCompatActivity?, var page: String) :
                 val title: String = tagHeading.select("a").eq(index).text()
                 //Pega os detalhes da noticia dentro da tag "a" com o atributo "href"
                 val details: String = tagHeading.select("a").eq(index).attr("href")
+
+
 
                 //Log.i("Result", details)
                 news.add(News(imgUrl, title, details))

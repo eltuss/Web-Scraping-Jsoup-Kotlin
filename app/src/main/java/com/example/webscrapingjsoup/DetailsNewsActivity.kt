@@ -4,9 +4,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.os.AsyncTask
-import android.os.Bundle
-import android.os.Environment
+import android.os.*
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -20,7 +18,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
-class DetailsNewsActivity : AppCompatActivity(), ILoadDetails {
+class DetailsNewsActivity() : AppCompatActivity(), ILoadDetails {
 
     private var urlImage: String? = null
     private var urlDetails: String? = null
@@ -43,68 +41,12 @@ class DetailsNewsActivity : AppCompatActivity(), ILoadDetails {
 
     }
 
-    //Função para compartilhar o item
-    fun shareNewsImage() {
-
-        //Aqui o compartilhar funciona para a imagem
-        Picasso.get().load(urlImage).into(object : Target{
-
-            override fun onPrepareLoad(placeHolderDrawable: Drawable?) {  }
-
-            override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) { }
-
-            override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
-                //Intenção criada com a ação de envio
-                val intent = Intent(Intent.ACTION_SEND)
-                //Aqui escolho o formato do arquivo, que no caso é o link para a imagem dentro de detalhes
-                intent.setType("image/* + $urlDetails")
-                // getLocalBitmapUri é a função abaixo
-                intent.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(bitmap!!))
-                //Aqui ele começa o share
-                startActivity(Intent.createChooser(intent, "Share"))
-
-                //verificar o que esta sendo compartilhado
-                Log.i("Compartilhamento: ","Result1 :  $intent" )
-            }
-
-            private fun getLocalBitmapUri(bitmap: Bitmap): Uri? {
-
-                var bitmapUri: Uri? = null
-                try {
-
-                    //Pega um diretorio externo do app para salvar a imagem
-                    val file = File(getExternalFilesDir(Environment.DIRECTORY_PICTURES),
-                    "shareimage" + ".png")
-
-                    //Pega o arquivo que esta salvo no endereço acima
-                    val out = FileOutputStream(file)
-                    //Comprime o arquivo no formato PNG para não ficar muito grande na saida
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 90, out)
-                    out.close()
-
-                    //bitmapUri pega o contexto dessa aplicação, o nome da pasta e atribui o caminho fileprovider
-                    bitmapUri = getUriForFile(applicationContext,
-                        applicationContext.packageName + ".fileprovider",
-                    file)
-
-                }catch(e : IOException){
-                    e.printStackTrace()
-                }
-                return bitmapUri
-            }
-
-        })
-    }
-
-    //função basica de compartilhamento - Compartilhar apenas o link
-    fun sharedLink(){
-
-        //Link fixo para teste
-        val shareBody = "https://jovemnerd.com.br/nerdbunker/the-boys-informacoes-condessa-carmesin-feiticeira-escarlate/"
+    //função basica de compartilhamento de link
+    fun sharedLink() {
 
         val sendIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, shareBody)
+            putExtra(Intent.EXTRA_TEXT, urlDetails)
             type = "text/plain"
         }
         val shareIntent = Intent.createChooser(sendIntent, null)
@@ -121,7 +63,7 @@ class DetailsNewsActivity : AppCompatActivity(), ILoadDetails {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id: Int = item.itemId
 
-        when(id){
+        when (id) {
             android.R.id.home -> finish() //Aqui ele volta para a tela de home(principal) MainActivity
             R.id.btn_share -> sharedLink()
 
@@ -132,16 +74,13 @@ class DetailsNewsActivity : AppCompatActivity(), ILoadDetails {
 
     //Aqui ele pega os itens separados somente do texto e exibe
     override fun getDetails(details: ArrayList<String>) {
-        for (index in 0..details.size-1){
-            if (index == details.size-1){
+        for (index in 0..details.size - 1) {
+            if (index == details.size - 1) {
                 txt_detail.append("\n" + details[index] + "\n")
 
-            }else{
+            } else {
                 txt_detail.append(details[index] + "\n\n")
             }
         }
     }
 }
-
-
-
